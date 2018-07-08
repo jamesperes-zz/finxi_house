@@ -124,3 +124,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = "finxiweb.BasicUserMod" 
+LOGIN_REDIRECT_URL = 'home'
