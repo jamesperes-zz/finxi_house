@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from .models import House, Customer, Seller, Image
@@ -29,7 +29,7 @@ def create_customer(request):
             customer_user.save()
             customer = Customer.objects.create(user=customer_user)
             messages.success(request, 'Usuario criado com sucesso!')
-            return redirect('')
+            return redirect('home')
     else:
         form = UserForm()
     return render(request, 'registration/create_customer.html', {'form':form})
@@ -45,7 +45,7 @@ def create_seller(request):
             seller_user.save()
             seller = Seller.objects.create(user=seller_user)
             messages.success(request, 'vendedor criado com sucesso!')
-            return redirect('')
+            return redirect('home')
     else:
         form = UserForm()
     return render(request, 'registration/create_seller.html', {'form':form})
