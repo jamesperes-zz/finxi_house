@@ -5,8 +5,13 @@ Casa
 
 
       <h2>{{house.title}}</h2>
-      <p><img src="{{ house.imagem.url }}" width="150" height="150" align="left" >
+      <p>
+      {% for photo in house.image_set.all%}
+      <img src="{{ photo.image_file.url }}" width="150" height="150" align="left" >
+      {% endfor %}
 
+      
+      {{ house.image_file.url }}
       {{house.about}}<br/>
       Endereco: {{house.street }}<br/>
       Bairro: {{house.district}}<br/>
@@ -14,5 +19,25 @@ Casa
 
       </p>
 
+<br/>
+<br/>
+<br/>
+<br/>
 
+proximos:
+
+{% for house in houses_near_result %}
+
+      <h2>{{house.title}}</h2>
+      <p>
+       {% for photo in house.image_set.all%}
+      <img src="{{ photo.image_file.url }}" width="150" height="150" align="left" >
+      {% endfor %}
+      {{house.about}}<br/>
+      Endereco: {{house.street }}<br/>
+      Bairro: {{house.district}}<br/>
+      Contato: {{house.seller }}<br/>
+
+      </p>
+{% endfor %}
 </html>

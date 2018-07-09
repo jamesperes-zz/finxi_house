@@ -5,7 +5,6 @@ from .models import House, Customer, Seller, Image
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth import authenticate, login, logout
 from django.forms import modelformset_factory
 from django.db.models import Q
 
@@ -36,6 +35,7 @@ def create_customer(request):
     return render(request, 'registration/create_customer.html', {'form':form})
 
 
+@staff_member_required
 def create_seller(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -51,6 +51,7 @@ def create_seller(request):
     return render(request, 'registration/create_seller.html', {'form':form})
 
 
+@staff_member_required
 def create_house(request):
     ImageFormset = modelformset_factory(Image, fields=('image_file',), extra=4)
     if request.method == 'POST':
@@ -85,8 +86,15 @@ def create_house(request):
 
 def house(request, house_id):
     house = House.objects.get(id=house_id)
+    houses = House.objects.exclude(id=house_id)
+    house_position = (house.lat, house.lng)
+    houses_near_result = []
+    for house_near in houses:
+        if vincenty(house_position, (house_near.lat, house_near.lng)).kilometers <= 10.0:
+            houses_near_result.append(house_near)
+    
     template = loader.get_template('finxiweb/house.html')
-    context = {'house':house}
+    context = {'house':house, 'houses_near_result': houses_near_result}
     return HttpResponse(template.render(context, request))
 
 

@@ -3,9 +3,11 @@
 testea
     {% for house in houses_home %}
 
-bla
       <h2>{{house.title}}</h2>
-      <p><img src="{{ house.imagem.url }}" width="150" height="150" align="left" >
+      <p> 
+           {% for photo in house.image_set.all%}
+      <img src="{{ photo.image_file.url }}" width="150" height="150" align="left" >
+      {% endfor %}
 
         {{house.about}}<br/>
       Endereco: {{house.street }}<br/>
