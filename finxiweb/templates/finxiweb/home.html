@@ -1,10 +1,10 @@
 <html>
 
-teste
+testea
     {% for house in houses_home %}
 
-    <div >
-      <h2>{{imovel.title}}</h2>
+bla
+      <h2>{{house.title}}</h2>
       <p><img src="{{ house.imagem.url }}" width="150" height="150" align="left" >
 
         {{house.about}}<br/>
@@ -13,7 +13,7 @@ teste
       Contato: {{house.seller }}<br/>
       Mais informações :<a href='/house/{{house.id}}'>Clique aqui</a><br/>
       </p>
-    </div>
+
     {%endfor%}
 
 </html>
