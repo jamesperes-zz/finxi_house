@@ -1,0 +1,8 @@
+Django
+psycopg2
+geocoder
+Pillow
+geopy
+boto3
+django-storages
+python-decouple
