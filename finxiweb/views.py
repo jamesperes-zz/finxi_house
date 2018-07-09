@@ -7,10 +7,10 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.forms import modelformset_factory
+from django.db.models import Q
 
-
-
-
+import geocoder
+from geopy.distance import vincenty
 
 from .forms import UserForm, HouseForm
 
@@ -36,7 +36,6 @@ def create_customer(request):
     return render(request, 'registration/create_customer.html', {'form':form})
 
 
-
 def create_seller(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -50,7 +49,6 @@ def create_seller(request):
     else:
         form = UserForm()
     return render(request, 'registration/create_seller.html', {'form':form})
-
 
 
 def create_house(request):
@@ -83,3 +81,28 @@ def create_house(request):
         'formset':formset
     } 
     return render(request, 'registration/create_house.html', context)
+
+
+def house(request, house_id):
+    house = House.objects.get(id=house_id)
+    template = loader.get_template('finxiweb/house.html')
+    context = {'house':house}
+    return HttpResponse(template.render(context, request))
+
+
+def search(request):
+    houses = House.objects.all()
+    search = request.POST.get('search')
+    result = search.filter(
+        Q(district__icontains=search) | Q(street__icontains=search)
+    )
+    search_position = geocoder.google(search)
+    center_search = (str(search_position.lat), str(search_position.lng))
+    houses_near = []
+    for house in houses:
+        if vincenty(center_search, (house.lat, house.lng)).kilometers <= 10.0:
+            houses_near.append(house)
+    
+    template = loader.get_template('finxiweb/search.html')
+    context = {'result':result, 'houses_near':houses_near}
+    return HttpResponse(template.render(context, request))

@@ -11,4 +11,5 @@ urlpatterns = [
     path('register-house/', views.create_house, name='create_house'),
     path('login/', auth_views.login, name='login'),
     path('logout/', auth_views.logout, {'next_page': ''}, name='logout'),
+    path('house/<int:house_id>/', views.house, name='house'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
