@@ -8,11 +8,6 @@ from django.contrib.auth.models import Permission
 
 import geocoder
 
-class Image(models.Model):
-    """Image upload to folder uploads
-
-    """
-    image_file = models.ImageField(upload_to='uploads/')
 
 class BasicUserMod(AbstractUser):
     """Basic User used base on models users
@@ -69,7 +64,7 @@ class House(models.Model):
     rent - Int
 
     """
-    seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200)
     about = models.TextField()
     street = models.CharField(max_length=80)
@@ -77,7 +72,6 @@ class House(models.Model):
     district = models.CharField(max_length=80)
     lat  = models.CharField(max_length=40, blank=True, null=True)
     lng  = models.CharField(max_length=40, blank=True, null=True)
-    images = models.ManyToManyField(Image)
     rent = models.IntegerField()
 
 
@@ -96,6 +90,15 @@ class House(models.Model):
         self.update_geocode()
         super(House, self).save(*args, **kwargs)
 
+class Image(models.Model):
+    """Image upload to folder uploads
+
+    """
+    image_file = models.ImageField(upload_to='uploads/', blank=True, null=True)
+    house = models.ForeignKey(House, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.house.title + " Image"
 
 class Customer(models.Model):
 

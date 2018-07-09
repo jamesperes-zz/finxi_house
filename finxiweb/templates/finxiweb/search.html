@@ -1,13 +1,11 @@
 <html>
 
-teste
-    {% for house in houses_home %}
+testea
+    {% for house in result %}
+
 
       <h2>{{house.title}}</h2>
-      <p> 
-           {% for photo in house.image_set.all%}
-      <img src="{{ photo.image_file.url }}" width="150" height="150" align="left" >
-      {% endfor %}
+      <p><img src="{{ house.imagem.url }}" width="150" height="150" align="left" >
 
         {{house.about}}<br/>
       Endereco: {{house.street }}<br/>
