@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div id="app">
+<template>
+  <v-app id="inspire">
+
+    <v-toolbar
+      :clipped-left="$vuetify.breakpoint.lgAndUp"
+      color="blue darken-3"
+      dark
+      app
+      fixed
+    >
+      <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
+
+        <span class="hidden-sm-and-down">Finxi House</span>
+      </v-toolbar-title>
+      <v-text-field
+        flat
+        solo-inverted
+        prepend-icon="search"
+        label="Search"
+        class="hidden-sm-and-down"
+      ></v-text-field>
+      <v-spacer></v-spacer>
+      <v-btn icon>
+        <v-icon>apps</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>notifications</v-icon>
+      </v-btn>
+      <v-btn icon large>
+        <v-avatar size="32px" tile>
+          <img
+            src="https://vuetifyjs.comhttps://cdn.vuetifyjs.com/images/logos/logo.svg"
+            alt="Vuetify"
+          >
+        </v-avatar>
+      </v-btn>
+    </v-toolbar>
+    <v-content>
+ <v-layout style="margin: 30px">
+    <v-flex xs2 sm4 offset-sm2>
+      <v-card>
+        <v-card-media
+          src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+          height="200px"
+        ></v-card-media>
+
+        <v-card-title primary-title>
+          <div>
+            <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
+            <div>Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...</div>
+          </div>
+        </v-card-title>
+
+        <v-card-actions>
+          <v-btn flat color="orange">Share</v-btn>
+          <v-btn flat color="orange">Explore</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+  </v-layout>
+    </v-content>
+   
+
+  </v-app>
+</template>
+
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+  <script>
+    new Vue({ el: '#app' })
+  </script>
+</body>
+</html>

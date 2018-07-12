@@ -7,12 +7,6 @@ services:
     container_name: postgres
     ports:
       - "5432:5432"
-  redis:
-    image: redis
-    container_name: redis
-    ports:
-      - "6379:6379"
-    command: redis-server --requirepass redis
   web:
     container_name: django
     build: .
@@ -23,4 +17,3 @@ services:
       - "8000:8000"
     depends_on:
       - db
-      - redis

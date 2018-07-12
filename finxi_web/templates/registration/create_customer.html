@@ -1,4 +1,13 @@
 <html>
+  <body>
+  {% if error_list %}
+  <ul>
+    {% for error in error_list %}
+    <li>{{ error }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
 
 {% block content %}
   <h2>Sign up</h2>
@@ -8,5 +17,5 @@
     <button type="submit">cadastrar</button>
   </form>
 {% endblock %}
-
+</body>
 </html>

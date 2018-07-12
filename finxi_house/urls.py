@@ -15,10 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from finxiweb import views
+from finxi_web import views
 
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('finxiweb.urls')),
-]
+urlpatterns = [path("admin/", admin.site.urls), path("", include("finxi_web.urls"))]

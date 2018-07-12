@@ -1,6 +1,6 @@
 from django.utils import timezone
 from django.db import migrations
-from finxiweb.models import BasicUserMod
+from finxi_web.models import BasicUserMod
 
 def create_superuser(apps, schema_editor):
     superuser = BasicUserMod()
@@ -16,7 +16,7 @@ def create_superuser(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('finxiweb', '0001_initial'),
+        ('finxi_web', '0001_initial'),
     ]
 
     operations = [

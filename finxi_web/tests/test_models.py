@@ -1,7 +1,8 @@
 
 from django.test import TestCase
 
-from finxiweb.models import Seller, House, Customer, BasicUserMod 
+from finxi_web.models import Seller, House, Customer, BasicUserMod
+
 
 class SellerTest(TestCase):
     """
@@ -16,8 +17,8 @@ class SellerTest(TestCase):
             username="usernameTest",
             first_name="TestName",
             last_name="TestLastName",
-            phone="123456789"
-            )
+            phone="123456789",
+        )
         self.seller = Seller.objects.create(user=self.basic_user)
 
     def test_create(self):
@@ -26,12 +27,11 @@ class SellerTest(TestCase):
     def test_seller_exists(self):
         self.assertTrue(Seller.objects.exists())
 
-    def test_is_instance_of_BasicUserMod(self):
+    def test_is_instance_of_basic_user_mod(self):
         self.assertIsInstance(self.basic_user, BasicUserMod)
 
 
 class HouseTest(TestCase):
-
     def setUp(self):
         self.basic_user = BasicUserMod.objects.create(
             email="test@test.com",
@@ -39,8 +39,8 @@ class HouseTest(TestCase):
             username="usernameTest",
             first_name="TestName",
             last_name="TestLastName",
-            phone="123456789"
-            )
+            phone="123456789",
+        )
         self.seller = Seller.objects.create(user=self.basic_user)
         self.house = House.objects.create(
             seller=self.seller,
@@ -50,7 +50,7 @@ class HouseTest(TestCase):
             city="Rio de Janeiro",
             district="Campinho",
             rent="500",
-            )
+        )
 
     def test_seller(self):
         self.assertEqual(self.seller.user.first_name, "TestName")
@@ -62,5 +62,5 @@ class HouseTest(TestCase):
         self.assertEqual(self.house.seller, self.seller)
 
     def test_house_geocoder(self):
-        lat= str(self.house.lat)
+        lat = str(self.house.lat)
         self.assertEqual(lat, "-22.8913874")
