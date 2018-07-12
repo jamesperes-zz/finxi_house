@@ -1,51 +1,5 @@
-
-
-<!DOCTYPE html>
-<html>
-<head>
-  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-</head>
-<body>
-  <div id="app">
-<template>
-  <v-app id="inspire">
-
-    <v-toolbar
-      :clipped-left="$vuetify.breakpoint.lgAndUp"
-      color="blue darken-3"
-      dark
-      app
-      fixed
-    >
-      <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
-
-        <span class="hidden-sm-and-down">Finxi House</span>
-      </v-toolbar-title>
-      <v-text-field
-        flat
-        solo-inverted
-        prepend-icon="search"
-        label="Search"
-        class="hidden-sm-and-down"
-      ></v-text-field>
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>apps</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>notifications</v-icon>
-      </v-btn>
-      <v-btn icon large>
-        <v-avatar size="32px" tile>
-          <img
-            src="https://vuetifyjs.comhttps://cdn.vuetifyjs.com/images/logos/logo.svg"
-            alt="Vuetify"
-          >
-        </v-avatar>
-      </v-btn>
-    </v-toolbar>
+{% extends 'finxi_web/base.html' %}
+{% block content %}
     <v-content>
 
        {% for house in houses_home %}
@@ -87,34 +41,6 @@
 
     </v-content>
    
-
-  </v-app>
-</template>
-
-
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
-  <script>
-    new Vue({ el: '#app' })
   </script>
-</body>
-</html>
 
-teste
-    {% for house in houses_home %}
-
-      <h2>{{house.title}}</h2>
-      <p> 
-           {% for photo in house.image_set.all%}
-      <img src="{{ photo.image_file.url }}" width="150" height="150" align="left" >
-      {% endfor %}
-
-
-      Mais informações :<a href='/house/{{house.id}}'>Clique aqui</a><br/>
-      </p>
-
-    {%endfor%}
-
-</html>
+  {% endblock %}

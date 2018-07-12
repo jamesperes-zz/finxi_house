@@ -13,8 +13,12 @@ from .forms import UserForm, HouseForm
 
 
 def home(request):
+    if request.user.is_authenticated:
+        user = request.user
+    else:
+        user = None
     houses_home = House.objects.all()
-    context = {"houses_home": houses_home}
+    context = {"houses_home": houses_home, "user": user}
     return render(request, "finxi_web/home.html", context)
 
 

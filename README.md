@@ -56,3 +56,6 @@ when you run the migrate for the first time it will create a user admin
 login: admin@admin.com
 
 password: admin1234
+
+### pep8
+this project all PEP8 rules have been tested and formatted by [Black] (https://github.com/ambv/black)

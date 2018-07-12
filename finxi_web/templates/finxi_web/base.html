@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+
+    {% block head %}
+    {% endblock %}
+
+  </head>
+  <body>
+      <div id="app">
+
+        <template>
+      <v-app id="inspire">
+
+        <v-toolbar
+          :clipped-left="$vuetify.breakpoint.lgAndUp"
+          color="blue darken-3"
+          dark
+          app
+          fixed
+        >
+          <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
+
+            <span class="hidden-sm-and-down">Finxi House</span>
+          </v-toolbar-title>
+          <v-text-field
+            flat
+            solo-inverted
+            prepend-icon="search"
+            label="Search"
+            class="hidden-sm-and-down"
+          ></v-text-field>
+          <v-spacer></v-spacer>
+          {% if user is not None%}
+          {{user.email}}
+          
+          <v-btn depressed small color="primary" href='/logout'>Logout</v-btn>
+          {% else %}
+          <v-btn depressed small color="primary" href='/register-customer'>Resgistrar</v-btn>
+           <v-btn depressed small color="primary" href='/login'>Login</v-btn>
+          {% endif %}
+        </v-toolbar>
+
+    {% block content %}
+    {% endblock %}
+
+      </v-app>
+    </template>
+
+      </div>
+
+
+
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+      <script>
+       new Vue({ el: '#app' })
+      </script>
+
+  </body>
+
+  </html>
