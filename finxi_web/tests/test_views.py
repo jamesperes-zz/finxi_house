@@ -57,3 +57,4 @@ class SellerTest(TestCase):
         response = self.client.get(self.url)
         self.assertEquals(response.status_code, 302)
 
+

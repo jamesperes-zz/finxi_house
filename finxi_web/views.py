@@ -13,10 +13,9 @@ from .forms import UserForm, HouseForm
 
 
 def home(request):
+    user = None
     if request.user.is_authenticated:
         user = request.user
-    else:
-        user = None
     houses_home = House.objects.all()
     context = {"houses_home": houses_home, "user": user}
     return render(request, "finxi_web/home.html", context)
@@ -103,36 +102,28 @@ def create_house(request):
 
 
 def house_detail(request, house_id):
-    """View get House detail
-    """
-    try:
-        house = get_object_or_404(House, id=house_id)
-    except ValueError:
-        raise Http404()
+    """View get House detail"""
+    house = get_object_or_404(House, id=house_id)
     houses = House.objects.exclude(id=house_id)
     house_position = (house.lat, house.lng)
     houses_near_result = []
     for house_near in houses:
-        if (
-            vincenty(house_position, (house_near.lat, house_near.lng)).kilometers
-            <= 10.0
-        ):
+        distance = vincenty(house_position, (house_near.lat, house_near.lng)).kilometers
+        if distance <= 10.0:
             houses_near_result.append(house_near)
     context = {"house": house, "houses_near_result": houses_near_result}
     return render(request, "finxi_web/house.html", context)
 
 
 def search(request):
-    """View get House list 
-    """
-
+    """View get House list"""
     houses = House.objects.all()
     search = request.POST.get("search")
     result = houses.filter(Q(district__icontains=search) | Q(street__icontains=search))
     search_position = geocoder.google(search)
 
     if None in (search_position.lat, search_position.lng):
-        return render(request, "finxi_web/search.html", {"result":result})
+        return render(request, "finxi_web/search.html", {"result": result})
 
     center_search = (str(search_position.lat), str(search_position.lng))
 
