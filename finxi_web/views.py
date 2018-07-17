@@ -17,7 +17,6 @@ def home(request):
         user = request.user
     else:
         user = None
-        print(user)
     houses_home = House.objects.all()
     context = {"houses_home": houses_home, "user": user}
     return render(request, "finxi_web/home.html", context)
