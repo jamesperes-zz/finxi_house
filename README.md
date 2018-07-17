@@ -6,6 +6,7 @@ Project to Finxi
 ### Tags
 
    - 0.1 - Django only(BETA)
+   - 0.2 - Front added
 
    
   
@@ -50,12 +51,23 @@ docker-compose exec web python manage.py migrate
 ```
 
 
-### Access to django-admin
+### Access admin
 when you run the migrate for the first time it will create a user admin
 
 login: admin@admin.com
 
 password: admin1234
+
+
+### Create Seller
+
+sellers can only be added with admin access
+
+
+### Create House
+
+houses can only be added by sellers
+
 
 ### pep8
 this project all PEP8 rules have been tested and formatted by [Black] (https://github.com/ambv/black)
