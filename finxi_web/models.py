@@ -41,8 +41,8 @@ class House(models.Model):
     street = models.CharField(max_length=80)
     city = models.CharField(max_length=80)
     district = models.CharField(max_length=80)
-    lat = models.CharField(max_length=40, blank=True)
-    lng = models.CharField(max_length=40, blank=True)
+    lat = models.CharField(max_length=40, blank=True, null=True, default=None)
+    lng = models.CharField(max_length=40, blank=True, null=True, default=None)
     rent = models.IntegerField()
 
     def geocoder(self):

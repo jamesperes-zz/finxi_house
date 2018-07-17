@@ -17,6 +17,7 @@ def home(request):
         user = request.user
     else:
         user = None
+        print(user)
     houses_home = House.objects.all()
     context = {"houses_home": houses_home, "user": user}
     return render(request, "finxi_web/home.html", context)
@@ -71,15 +72,18 @@ def create_house(request):
     For staff members only
     """
     error_list = []
-    ImageFormset = modelformset_factory(Image, fields=("image_file",), extra=4)
+    ImageFormset = modelformset_factory(Image, fields=("image_file",), extra=2)
     if request.method == "POST":
         form = HouseForm(request.POST)
         formset = ImageFormset(request.POST or None, request.FILES or None)
         if form.is_valid() and formset.is_valid():
-            house_values = form.save()
+            house_values = form.save(commit=False)
             current_user = request.user
+            #import ipdb; ipdb.set_trace();
             seller = Seller.objects.filter(user__id=current_user.id)[0]
+
             house_values.seller = seller
+            house_values.save()
             for f in formset:
                 try:
                     photo = Image(
@@ -124,14 +128,22 @@ def house_detail(request, house_id):
 def search(request):
     """View get House list 
     """
+
     houses = House.objects.all()
     search = request.POST.get("search")
-    result = search.filter(Q(district__icontains=search) | Q(street__icontains=search))
+    result = houses.filter(Q(district__icontains=search) | Q(street__icontains=search))
     search_position = geocoder.google(search)
+
+    if None in (search_position.lat, search_position.lng):
+        return render(request, "finxi_web/search.html", {"result":result})
+
     center_search = (str(search_position.lat), str(search_position.lng))
+      
     houses_near = []
     for house in houses:
-        if vincenty(center_search, (house.lat, house.lng)).kilometers <= 10.0:
-            houses_near.append(house)
+        if None not in (house.lat, house.lng):
+            distance = vincenty(center_search, (house.lat, house.lng)).kilometers
+            if distance <= 10.0:
+                houses_near.append(house)
     context = {"result": result, "houses_near": houses_near}
     return render(request, "finxi_web/search.html", context)

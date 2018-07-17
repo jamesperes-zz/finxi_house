@@ -37,7 +37,7 @@ class CreateCustomerTest(TestCase):
         self.assertFormError(response, "form", "email", "This field is required.")
 
 
-class CreateSellerTest(TestCase):
+class SellerTest(TestCase):
     def setUp(self):
         self.client = Client()
         self.url = reverse("create_seller")
@@ -56,3 +56,4 @@ class CreateSellerTest(TestCase):
     def test_view_redirect_not_logged(self):
         response = self.client.get(self.url)
         self.assertEquals(response.status_code, 302)
+

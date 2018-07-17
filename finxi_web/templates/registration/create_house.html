@@ -1,13 +1,99 @@
-<html>
+
+{% extends 'finxi_web/base.html' %}
 
 {% block content %}
-  <h2>Sign up</h2>
+<div style="margin-top: 60px">
+  <h2>Cadastras Casa</h2>
+
+
+  {% if error_list %}
+  <ul><p>Falta preencher</p>
+    {% for error in error_list %}
+    <li>{{ error }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
-    {{ formset.as_table}}
-    <button type="submit">cadastrar</button>
+    <v-container>
+      <v-layout row wrap>
+        <v-flex xs1>
+          <v-chip label disabled=True>Anúncio</v-chip>
+        </v-flex>
+        <v-flex xs11>
+           <input type="text" class="form-control" id="id_title" name="title" placeholder="Titulo do anúncio" style="width: 400px">
+        </v-flex>
+
+        <v-flex xs1>
+          <v-chip label disabled=True>Descrição</v-chip>
+        </v-flex>
+        <v-flex xs11>
+          <textarea  class="form-control" id="id_about" name="about" placeholder="Descrição do anuncio" style="width: 400px"></textarea>
+        </v-flex>
+
+        <v-flex xs1>
+          <v-chip label disabled=True>Rua</v-chip>
+        </v-flex>
+        <v-flex xs11>
+          <input type="text" class="form-control" id="id_street" name="street" placeholder="Rua" style="width: 400px; margin-top: 3px">
+        </v-flex>
+
+        <v-flex xs1>
+          <v-chip label disabled=True>Bairro</v-chip>
+        </v-flex>
+        <v-flex xs11>
+          <input type="text" class="form-control" id="id_district" name="district" placeholder="Bairro" style="width: 400px">
+        </v-flex>
+
+        <v-flex xs1>
+          <v-chip label disabled=True>Cidade</v-chip>
+        </v-flex>
+        <v-flex xs11>
+          <input type="text" class="form-control" id="id_city" name="city" placeholder="Cidade" style="width: 400px">
+        </v-flex>
+
+        <v-flex xs1>
+          <v-chip label disabled=true>preço</v-chip>
+        </v-flex>
+        <v-flex xs11>
+          <input type="number" class="form-control" id="id_rent" name="rent" placeholder="Preço do aluguel" style="width: 400px">
+        </v-flex>
+        {{ formset.management_form }}
+        {% for photo in formset %}
+
+        <v-flex xs1>
+          <v-chip label disabled=true>Foto</v-chip>
+        </v-flex>
+        <v-flex xs11>
+
+          {{ photo.image_file}}
+
+        </v-flex>
+        {% endfor %}
+
+
+      </v-layout>
+    </v-container>
+ {% if user.is_superuser %}
+    <v-alert
+      :value="true"
+      color="error"
+      icon="warning"
+      outline
+    >
+      Você está logado como Administrador, por favor entre como Vendedor
+    </v-alert>
+
+{% else %}
+
+    <button type="submit" class="btn btn-default">Cadastrar</button>
+
+{% endif %}
   </form>
+
+
+</div>
 {% endblock %}
 
-</html>

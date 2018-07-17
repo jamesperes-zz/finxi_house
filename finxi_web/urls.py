@@ -9,6 +9,7 @@ urlpatterns = [
     path("register-customer/", views.create_customer, name="create_customer"),
     path("register-seller/", views.create_seller, name="create_seller"),
     path("register-house/", views.create_house, name="create_house"),
+    path("search/", views.search, name="search"),
     path("login/", auth_views.login, name="login"),
     path("logout/", auth_views.logout, {"next_page": "home"}, name="logout"),
     path("house/<int:house_id>/", views.house_detail, name="house_detail"),

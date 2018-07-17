@@ -6,10 +6,11 @@ services:
     image: postgres
     container_name: postgres
     ports:
-      - "5432:5432"
+      - "5430:5432"
   web:
     container_name: django
     build: .
+    image: finxi
     command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code

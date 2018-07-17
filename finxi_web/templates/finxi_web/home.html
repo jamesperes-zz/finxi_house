@@ -1,46 +1,50 @@
 {% extends 'finxi_web/base.html' %}
 {% block content %}
+<div id="app">
     <v-content>
 
        {% for house in houses_home %}
  <v-layout style="margin-top: 30px">
-     
-    <v-flex xs6 sm6 offset-sm1>
+    <v-flex xs12 >
 
       <v-card>
-                {% for photo in house.image_set.all%}
-                        <v-card-media
+        {% with house.image_set.all|first as photo%}
+         <v-card-media
           src="{{ photo.image_file.url }}"
           height="200px"
-        ></v-card-media>
+         >
+         </v-card-media>
 
-      {% endfor %}
-
+      {% endwith %}
 
         <v-card-title primary-title>
           <div>
             <h3 class="headline mb-0">{{house.title}}</h3>
             <div>
-              {{house.about}}<br/>
               Endereco: {{house.street }}<br/>
               Bairro: {{house.district}}<br/>
-              Contato: {{house.seller }}<br/>
+              Contato: {{house.seller.user.username }}<br/>
             </div>
           </div>
         </v-card-title>
 
-        <v-card-actions>
-          <v-btn flat color="orange">Share</v-btn>
-          <v-btn flat color="orange">Explore</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
+
+        <v-slide-y-transition>
+          <v-card-text >
+            {{house.about}}<br/>
+
+          </v-card-text>
+        </v-slide-y-transition>
+
+    </V-flex>
 
   </v-layout>
         {%endfor%}
 
     </v-content>
-   
-  </script>
+
+      </div>
+
 
   {% endblock %}
+
