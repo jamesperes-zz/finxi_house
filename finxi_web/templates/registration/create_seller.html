@@ -1,0 +1,73 @@
+
+{% extends 'finxi_web/base.html' %}
+
+{% block content %}
+
+<div style="margin-top: 60px">
+    <h2>Registrar venderdor</h2>
+
+    {% if error_list %}
+    <v-alert
+      :value="true"
+      color="error"
+      icon="warning"
+      outline
+    >
+      <p>Falta preencher</p>
+      {% for error in error_list %}
+      {{ error }}<br />
+      {% endfor %}
+
+    </v-alert>
+    {% endif %}
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <v-container>
+      <v-layout row wrap>
+        <v-flex xs2>
+          <v-chip label disabled=True>Primeiro Nome</v-chip>
+        </v-flex>
+        <v-flex xs10>
+           <input type="text" class="form-control" id="id_first_name" name="first_name" placeholder="Primeiro Nome" style="width: 400px">
+        </v-flex>
+
+        <v-flex xs2>
+          <v-chip label disabled=True>Sobrenome</v-chip>
+        </v-flex>
+        <v-flex xs10>
+          <input  class="form-control" id="id_last_name" name="last_name" placeholder="Sobrenome" style="width: 400px"></textarea>
+        </v-flex>
+
+        <v-flex xs2>
+          <v-chip label disabled=True>Username</v-chip>
+        </v-flex>
+        <v-flex xs10>
+          <input type="text" class="form-control" id="id_username" name="username" placeholder="Username" style="width: 400px">
+        </v-flex>
+
+        <v-flex xs2>
+          <v-chip label disabled=True>Senha</v-chip>
+        </v-flex>
+        <v-flex xs10>
+          <input type="password" class="form-control" id="id_password" name="password" placeholder="Senha" style="width: 400px">
+        </v-flex>
+
+        <v-flex xs2>
+          <v-chip label disabled=True>Email</v-chip>
+        </v-flex>
+        <v-flex xs10>
+          <input type="email" class="form-control" id="id_email" name="email" placeholder="Email" style="width: 400px">
+        </v-flex>
+      </v-layout>
+    </v-container>
+
+     <button type="submit" class="btn btn-default">Cadastrar</button>
+
+  </form>
+
+
+</div>
+
+
+{% endblock %}

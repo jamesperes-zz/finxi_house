@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+    {% block head %}
+    {% endblock %}
+
+  </head>
+  <body>
+      <div id="app">
+
+        <template>
+      <v-app id="inspire">
+
+        <v-toolbar
+          :clipped-left="$vuetify.breakpoint.lgAndUp"
+          color="blue darken-3"
+          dark
+          app
+          fixed
+        >
+          <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
+            <a href='/'>
+            <span >Finxi House</span>
+            </a>
+          </v-toolbar-title>
+          <form  action="{% url 'search' %}" method="POST"  class="form-inline">
+            {% csrf_token %}
+            <input type="descricao" class="form-control" name="search" placeholder="Pesquise aqui" >
+            <button type="submit" class="btn btn-primary">Pesquisar</button>
+
+          </form>
+          <v-spacer></v-spacer>
+          {% if user.is_authenticated %}
+          {{user.email}}
+          {% if user.is_staff %}
+             <v-btn depressed small color="primary" href='/register-house'>Cadastrar casa</v-btn>
+          {% endif %}
+          {% if user.is_superuser %}
+             <v-btn depressed small color="primary" href='/register-seller'>Cadastrar Vendedor</v-btn>
+          {% endif %}
+
+          <v-btn depressed small color="primary" href='/logout'>Logout</v-btn>
+          {% else %}
+          <v-btn depressed small color="primary" href='/register-customer'>Registrar</v-btn>
+           <v-btn depressed small color="primary" href='/login'>Login</v-btn>
+          {% endif %}
+        </v-toolbar>
+        <v-container grid-list-md text-xs-center>
+          <v-layout row wrap>
+
+            <v-flex xs8>
+
+            {% block content %}
+            {% endblock %}
+
+            </v-flex>
+            <v-flex xs2>
+            </v-flex>
+
+          </v-layout>
+        </v-container>
+      </v-app>
+    </template>
+
+      </div>
+
+
+
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+      <script>
+       new Vue({ el: '#app' })
+      </script>
+
+  </body>
+
+  </html>

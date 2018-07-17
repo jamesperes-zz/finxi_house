@@ -1,12 +1,13 @@
 from django.test import TestCase, Client
 from django.shortcuts import resolve_url as r
 from django.urls import reverse
-from finxiweb.models import BasicUserMod, Customer, Seller
+from finxi_web.models import BasicUserMod, Customer, Seller
+
 
 class HomeTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.url = reverse('home')
+        self.url = reverse("home")
 
     def tearDown(self):
         pass
@@ -17,31 +18,30 @@ class HomeTest(TestCase):
 
     def test_template_used(self):
         response = self.client.get(self.url)
-        self.assertTemplateUsed(response, 'finxiweb/home.html')
+        self.assertTemplateUsed(response, "finxi_web/home.html")
+
 
 class CreateCustomerTest(TestCase):
-
     def setUp(self):
         self.client = Client()
-        self.url = reverse('create_customer')
+        self.url = reverse("create_customer")
 
     def test_view_ok(self):
         response = self.client.get(self.url)
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'registration/create_customer.html')
+        self.assertTemplateUsed(response, "registration/create_customer.html")
 
     def test_form_error(self):
-        data = {'first_name': '', 'email': ''}
+        data = {"first_name": "", "email": ""}
         response = self.client.post(self.url, data)
-        self.assertFormError(response, 'form', 'email', 'This field is required.')
+        self.assertFormError(response, "form", "email", "This field is required.")
 
 
-class CreateSellerTest(TestCase):
-
+class SellerTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.url = reverse('create_seller')
-        self.login_url = reverse('login')
+        self.url = reverse("create_seller")
+        self.login_url = reverse("login")
 
         self.basic_user = BasicUserMod.objects.create(
             email="test@test.com",
@@ -49,25 +49,12 @@ class CreateSellerTest(TestCase):
             username="usernameTest",
             first_name="TestName",
             last_name="TestLastName",
-            phone="123456789"
-            )
+            phone="123456789",
+        )
         self.seller = Seller.objects.create(user=self.basic_user)
-
 
     def test_view_redirect_not_logged(self):
         response = self.client.get(self.url)
         self.assertEquals(response.status_code, 302)
 
-"""
-    def test_view_ok(self):
-        self.client.login(email='test@test.com', password='abcd123456')
-        response = self.client.get(self.url)
-        self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'registration/create_seller.html')
 
-    def test_form_error(self):
-        data = {'first_name': '', 'email': ''}
-        response = self.client.post(self.url, data)
-        self.assertFormError(response, 'form', 'email', 'This field is required.')
-
-"""

@@ -1,12 +1,13 @@
-FROM python:3
+FROM python:3.7.0-slim-stretch
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
-RUN mkdir /code
+COPY . /code/
 WORKDIR /code
 
-ADD requirements.txt /code/
 RUN pip install -r requirements.txt
 
-ADD . /code/
+CMD ["python", "manage.py", "runserver" , "0.0.0.0:8000"]
+
+

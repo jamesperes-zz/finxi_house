@@ -1,0 +1,66 @@
+{% extends 'finxi_web/base.html' %}
+{% block content %}
+<div id="app">
+  <v-content>
+
+    <v-container xs8 grid-list-md >
+
+      <h3 class="display-3">Resultado da Pesquisa:</h3>
+
+      <v-layout row wrap>
+
+            {% for house in result %}
+
+        <v-flex xs3 fluid grid-list-md>
+        <v-card>
+          {% with house.image_set.all|first as photo%}
+          <v-card-media
+            src="{{ photo.image_file.url }}"
+            height="200px"
+          >
+          </v-card-media>
+
+          {% endwith %}
+
+          <v-card-title primary-title>
+            <div>
+              <h3 class="headline mb-0">{{house.title}}</h3>
+              <div>
+                Endereco: {{house.street }}<br/>
+                Bairro: {{house.district}}<br/>
+                Contato: {{house.seller.user.username }}<br/>
+              </div>
+            </div>
+          </v-card-title>
+
+          <v-slide-y-transition>
+            <v-card-text >
+              <v-btn depressed small color="primary" href='/house/{{house.id}}'>Mais informações</v-btn>
+            </v-card-text>
+          </v-slide-y-transition>
+
+        </v-flex>
+
+        {%endfor%}
+        {% if not result %}
+        <v-alert
+          :value="true"
+          color="error"
+          icon="warning"
+          outline
+        >
+          Nenhum imovel encontrado 
+        </v-alert>
+
+        {% endif %}
+
+      </v-layout>
+    </v-container>
+  </v-content>
+
+</div>
+
+
+
+{% endblock %}
+
