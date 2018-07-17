@@ -79,9 +79,7 @@ def create_house(request):
         if form.is_valid() and formset.is_valid():
             house_values = form.save(commit=False)
             current_user = request.user
-            #import ipdb; ipdb.set_trace();
             seller = Seller.objects.filter(user__id=current_user.id)[0]
-
             house_values.seller = seller
             house_values.save()
             for f in formset:
@@ -138,7 +136,7 @@ def search(request):
         return render(request, "finxi_web/search.html", {"result":result})
 
     center_search = (str(search_position.lat), str(search_position.lng))
-      
+
     houses_near = []
     for house in houses:
         if None not in (house.lat, house.lng):

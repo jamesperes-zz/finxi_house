@@ -7,11 +7,19 @@
 
 
   {% if error_list %}
-  <ul><p>Falta preencher</p>
+  <v-alert
+    :value="true"
+    color="error"
+    icon="warning"
+    outline
+  >
+ 
+  <p>Falta preencher</p>
     {% for error in error_list %}
-    <li>{{ error }}</li>
+  {{ error }}<br />
     {% endfor %}
-  </ul>
+
+  </v-alert>
   {% endif %}
 
 

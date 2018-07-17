@@ -34,33 +34,34 @@
           fixed
         >
           <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
-
-            <span class="hidden-sm-and-down" >Finxi House</span>
+            <a href='/'>
+            <span >Finxi House</span>
+            </a>
           </v-toolbar-title>
-          <form  action="{% url 'search' %}" method="POST" >
+          <form  action="{% url 'search' %}" method="POST"  class="form-inline">
             {% csrf_token %}
-            <input type="descricao" name="search" placeholder="Pesquise aqui" >
-            <button type="submit" class="btn btn-default">Pesquisar</button>
+            <input type="descricao" class="form-control" name="search" placeholder="Pesquise aqui" >
+            <button type="submit" class="btn btn-primary">Pesquisar</button>
 
-            <v-icon type="submit">search</v-icon>
           </form>
           <v-spacer></v-spacer>
           {% if user.is_authenticated %}
           {{user.email}}
           {% if user.is_staff %}
-          <v-btn depressed small color="primary" href='/register-house'>Cadastrar casa</v-btn>
+             <v-btn depressed small color="primary" href='/register-house'>Cadastrar casa</v-btn>
+          {% endif %}
+          {% if user.is_superuser %}
+             <v-btn depressed small color="primary" href='/register-seller'>Cadastrar Vendedor</v-btn>
           {% endif %}
 
           <v-btn depressed small color="primary" href='/logout'>Logout</v-btn>
           {% else %}
-          <v-btn depressed small color="primary" href='/register-customer'>Resgistrar</v-btn>
+          <v-btn depressed small color="primary" href='/register-customer'>Registrar</v-btn>
            <v-btn depressed small color="primary" href='/login'>Login</v-btn>
           {% endif %}
         </v-toolbar>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
-            <v-flex xs2>
-            </v-flex>
 
             <v-flex xs8>
 
